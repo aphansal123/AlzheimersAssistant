@@ -1,0 +1,73 @@
+<html>
+	<head>
+		<title></title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="stylesheet2.css" />
+
+	</head>
+    <body>
+
+        <center>
+            <a href="openingPage.html"> Home </a>
+            &nbsp;
+            <a href="about_you.html"> About you </a>
+            &nbsp;
+            <a href="life_events.html"> Important Life Events </a>
+            &nbsp;
+            <a href="imageGallery.html"> Photos </a>
+
+            <p class="gap_below">
+                <span class="indent"></span>
+                Your name is Peter Smith Jenkins. You are a retired software engineer, with 3 kids,
+                6 grandchildren and currently live in Seattle, Washington. <br/> Since your retirement, you
+                have volunteered with a few non-profit organizations and spend your time <br/> with your grandchildren, playing board games, doing yoga and watch soap operas.
+            </p>
+
+            <p class="gap_below"> Listen to some of your favorite songs from the past :) </p>
+
+            <div>
+                <p id = "demo">  </p>
+                <button onclick="playAudio()" type="button" class="dropbtn">
+                    Play Audio
+                </button>
+                &nbsp; &nbsp; &nbsp;
+
+                <button onclick="pauseAudio()" type="button" class="dropbtn"> Pause Audio </button>
+                &nbsp; &nbsp; &nbsp;
+
+                <button onclick="shuffle()" type="button" class="dropbtn"> Shuffle Audio</button>
+                &nbsp; &nbsp; &nbsp;
+            </div>
+            
+            
+            <script type="text/javascript">
+                var audio_files = ["Aurora_Borealis_Expedition.mp3",
+                    "Down_The_Street_Blues.mp3",
+                    "Hot_Hot_Coffee.mp3",
+                    "My_Train_s_A_Comin.mp3",
+                    "Web_Weaver_s_Dance.mp3"]
+                var random_file = audio_files[Math.floor(Math.random() * audio_files.length)];
+                var audio = new Audio(random_file);
+                function playAudio() {
+                    audio.play();
+                    document.getElementById("demo").innerHTML = "Current song playing: " +
+                        random_file.substring(0, random_file.length - 4);
+                }
+
+                function pauseAudio() {
+                    audio.pause();
+                }
+
+                function shuffle() {
+                    pauseAudio();
+                    random_file = audio_files[Math.floor(Math.random() * audio_files.length)]
+                    audio = new Audio(random_file);
+                    document.getElementById("demo").innerHTML = "Current song playing: " +
+                        random_file.substring(0, random_file.length - 4);
+                }
+            </script>
+
+        </center>
+
+    </body>
+</html>

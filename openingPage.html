@@ -1,0 +1,267 @@
+<html>
+	<head>
+		<title>Welcome to your personal memory assistant!</title>
+		<!-- <link rel="stylesheet" type="text/css" href="bootstrap.css" /> -->
+		<link rel="stylesheet" type="text/css" href="styles.css" />
+
+		<script src="jquery-3.3.1.min.js"></script>
+		<script src="Treant.js"></script>
+
+	</head>
+
+	<body>
+		<p id="demo"></p>
+
+		<script>
+		var d = new Date();
+		document.getElementById("demo").innerHTML = d;
+		</script>
+
+		<center>
+			<a href="openingPage.html">Home</a>
+			&nbsp; &nbsp; &nbsp;
+			<a href="about_you.html">About You</a>
+			&nbsp; &nbsp; &nbsp;
+			<a href="life_events.html">Important Life Events</a>
+			&nbsp; &nbsp; &nbsp;
+			<a href="imageGallery.html"> Photos </a>
+
+			<h1> A personal memory assistant for Alzheimer's patients </h1>
+
+			<img src="happy-elderly-person.jpg" height="500" width="1000" />
+			<br><br>
+
+			<div class="dropdown">
+				<button class="dropbtn"> Daily Tasks to complete </button>
+					<div class="dropdown-content">
+						<h2 style="margin:15px"> My To Do List </h2>
+						<input type="text" id="myInput" placeholder="Title...">	
+						<span onclick="newElement()" class="addBtn">Add</span>
+						<br> <br>
+						<div class="dropdown-content">
+							<ul id="myUL">
+                                <li> Eat Corflakes </li>
+                                <li class="checked"> Take Petunia, your 5-year old german pitbull, out for a walk </li>
+								<li> Meet George </li>
+								<li> Buy eggs </li>
+								<li> Read a book </li>
+								<li> Organize office </li>
+							</ul>
+						</div>
+					  	
+					</div>
+
+			</div>
+
+			<script>
+				// Create a "close" button and append it to each list item
+				var myNodelist = document.getElementsByTagName("LI");
+				var i;
+				for (i = 0; i < myNodelist.length; i++) {
+				  var span = document.createElement("SPAN");
+				  var txt = document.createTextNode("\u00D7");
+				  span.className = "close";
+				  span.appendChild(txt);
+				  myNodelist[i].appendChild(span);
+				}
+
+				// Click on a close button to hide the current list item
+				var close = document.getElementsByClassName("close");
+				var i;
+				for (i = 0; i < close.length; i++) {
+				  close[i].onclick = function() {
+				    var div = this.parentElement;
+				    div.style.display = "none";
+				  }
+				}
+
+				// Add a "checked" symbol when clicking on a list item
+				var list = document.querySelector('ul');
+				list.addEventListener('click', function(ev) {
+				  if (ev.target.tagName === 'LI') {
+				    ev.target.classList.toggle('checked');
+				  }
+				}, false);
+
+				// Create a new list item when clicking on the "Add" button
+				function newElement() {
+				  var li = document.createElement("li");
+				  var inputValue = document.getElementById("myInput").value;
+				  var t = document.createTextNode(inputValue);
+				  li.appendChild(t);
+				  if (inputValue === '') {
+				    alert("You must write something!");
+				  } else {
+				    document.getElementById("myUL").appendChild(li);
+				  }
+				  document.getElementById("myInput").value = "";
+
+				  var span = document.createElement("SPAN");
+				  var txt = document.createTextNode("\u00D7");
+				  span.className = "close";
+				  span.appendChild(txt);
+				  li.appendChild(span);
+
+				  for (i = 0; i < close.length; i++) {
+				    close[i].onclick = function() {
+				      var div = this.parentElement;
+				      div.style.display = "none";
+				    }
+				  }
+				}
+			</script>
+
+			&nbsp; &nbsp; &nbsp;
+			<div class="dropdown">
+				  <button class="dropbtn"> Highlights from your previous day </button>
+					<div class="dropdown-content">
+					<a href="#"> It was your granddaughter's birthday! You got to make balloon animals </a>
+					<a href="#"> You bought a new pair of leather shoes </a>
+					<a href="#"> You played tennis for the first time in 10 years! </a>
+					</div>
+			</div>
+
+			&nbsp; &nbsp; &nbsp;
+			<div class="dropdown">
+				  <button class="dropbtn"> Watch a funny video from DubHacks 2018 </button>
+				  <div class="dropdown-content">
+					<video width="315" height="240" controls>
+	  					<source src="knocking down cups.mp4" type="video/mp4"> 
+	  			    </video>
+	  			  </div>
+	  		</div>	
+
+	  		&nbsp; &nbsp; &nbsp;
+	  		<div class="dropdown">
+				<button class="dropbtn" onclick= "myFunction()"> Medication Prompt </button>
+				<script type="text/javascript">
+					function myFunction() {
+					    var medication = prompt("Did you take your medication?", " ");
+					    if (medication == null || medication == "no") {
+					        alert("please take your medication");
+					    } else {
+					        alert("I'm glad you're keeping track! =)");
+					    }
+					}
+				</script>
+			</div>
+
+			&nbsp; &nbsp; &nbsp;
+			<div class="dropdown">
+				<button onclick="getLocation()" class="dropbtn"> Show you current location </button>
+				<div class="dropdown-content">
+					<div id="mapholder"> </div>
+					<script>
+						var x = document.getElementById("demo");
+
+						function getLocation() {
+						    if (navigator.geolocation) {
+						        navigator.geolocation.getCurrentPosition(showPosition, showError);
+						    } else {
+						        x.innerHTML = "Geolocation is not supported by this browser.";
+						    }
+						}
+
+						function showPosition(position) {
+						    var latlon = position.coords.latitude + "," + position.coords.longitude;
+						    var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
+						    +latlon+"&zoom=14&size=400x300&key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU";
+						    document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+						}
+						//To use this code on your website, get a free API key from Google.
+						//Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+
+						function showError(error) {
+						    switch(error.code) {
+						        case error.PERMISSION_DENIED:
+						            x.innerHTML = "User denied the request for Geolocation."
+						            break;
+						        case error.POSITION_UNAVAILABLE:
+						            x.innerHTML = "Location information is unavailable."
+						            break;
+						        case error.TIMEOUT:
+						            x.innerHTML = "The request to get user location timed out."
+						            break;
+						        case error.UNKNOWN_ERROR:
+						            x.innerHTML = "An unknown error occurred."
+						            break;
+						    }
+						}
+					</script>
+				</div>
+			</div>
+			
+
+
+
+			
+
+			<!-- <script type="text/javascript">
+				window.onload = function() { 
+					var request = new XMLHttpRequest();
+					request.open('GET', 'https://od-api.oxforddictionaries.com/api/v1', true);
+					request.onload = function() {
+
+						// Begin access JSON data here
+						// Begin accessing JSON data here
+						var data = JSON.parse(this.response);
+
+						data.forEach(movie => {
+						  // Log each movie's title
+							console.log(movie.title);
+						});
+					}
+				};
+			</script> -->
+
+
+
+			
+			<!-- <div class="dropdown">
+				<button class="dropbtn"> Daily Tasks </button>
+				<div class="dropdown-content">
+				    <p1> Link 1 </p1>
+				    <p2> Link 2 </p2>
+				    <p3> Link 3 </p3>
+				</div>
+			</div> -->
+
+			<!-- <div id="tree-simple" style="width:335px; height: 160px"></div>
+
+			<script 
+	 
+			<script type="text/javascript">
+
+				window.onload = function() { 
+
+					var simple_chart_config = {
+				        chart: {
+				            container: "#tree-simple"
+				        },
+
+				        nodeStructure: {
+				            text: { name: "Parent node" },
+				            children: [
+				                {
+				                    text: { name: "First child" }
+				                },
+				                {
+				                    text: { name: "Second child" }
+				                }
+				            ]
+				        }
+				    };
+
+
+					function createTree() {
+						var chart = new Treant(simple_chart_config, function () { alert('Tree Loaded') }, $);
+					}
+
+					createTree();
+
+				}
+			</script> -->
+		</center>
+
+	</body>
+</html> 
